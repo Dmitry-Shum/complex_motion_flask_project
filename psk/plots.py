@@ -199,7 +199,7 @@ def psk_trajectory(data):
     
     fig.update_layout(
         title=dict(
-            text='<b>Рис. 1 - Траектория движения точки</b>',
+            text='<b>Рис. 1 - Траектория точки</b>',
             font=dict(size=18, family='Times New Roman'),
             x=0.5
         ),
