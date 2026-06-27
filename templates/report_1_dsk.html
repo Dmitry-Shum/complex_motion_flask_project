@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.1/plotly.min.js"></script>
     <style>
-        body { margin: 0; padding: 10px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9f9f9; color: #333; line-height: 1.5; }
+        body { margin: 0; padding: 10px; font-family: 'Times New Roman', Times, serif; background-color: #f9f9f9; color: #333; line-height: 1.5; }
         .container { max-width: 1200px; margin: 0 auto; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         h1, h2, h3 { color: #0066cc; }
         .btn-group { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; margin-bottom: 20px; }
@@ -127,11 +127,11 @@
         x(1) = 8\cos\left(\frac{\pi}{3}\right) = 8 \cdot \frac{1}{2} = 4 \ \text{м}
         \]
         \[
-        y(1) = 16\sin\left(\frac{\pi}{3}\right) = 16 \cdot \frac{\sqrt{3}}{2} = 8\sqrt{3} \approx {{ "%.4f"|format(data.point[1]) }} \ \text{м}
+        y(1) = 16\sin\left(\frac{\pi}{3}\right) = 16 \cdot \frac{\sqrt{3}}{2} = 8\sqrt{3} \approx {{ (data.point[1])|gost(4) }} \ \text{м}
         \]
         <p>Точка \(M\) в момент \(t = {{ data.t }}\) с имеет координаты:</p>
         \[
-        M(4;\ 8\sqrt{3}) \ \text{м} \quad \text{или} \quad M({{ "%.4f"|format(data.point[0]) }};\ {{ "%.4f"|format(data.point[1]) }})\ \text{м}
+        M(4;\ 8\sqrt{3}) \ \text{м} \quad \text{или} \quad M({{ (data.point[0])|gost(4) }};\ {{ (data.point[1])|gost(4) }})\ \text{м}
         \]
     </div>
 
@@ -155,21 +155,21 @@
         
         <p>Подставляем \(t = {{ data.t }}\) с:</p>
         \[
-        \dot x(1) = -\frac{16\pi}{3} \sin\left(\frac{\pi}{3}\right) = -\frac{16\pi}{3} \cdot \frac{\sqrt{3}}{2} = -\frac{8\pi\sqrt{3}}{3} \approx {{ "%.4f"|format(data.V[0]) }} \ \text{м/с}
+        \dot x(1) = -\frac{16\pi}{3} \sin\left(\frac{\pi}{3}\right) = -\frac{16\pi}{3} \cdot \frac{\sqrt{3}}{2} = -\frac{8\pi\sqrt{3}}{3} \approx {{ (data.V[0])|gost(4) }} \ \text{м/с}
         \]
         \[
-        \dot y(1) = \frac{32\pi}{3} \cos\left(\frac{\pi}{3}\right) = \frac{32\pi}{3} \cdot \frac{1}{2} = \frac{16\pi}{3} \approx {{ "%.4f"|format(data.V[1]) }} \ \text{м/с}
+        \dot y(1) = \frac{32\pi}{3} \cos\left(\frac{\pi}{3}\right) = \frac{32\pi}{3} \cdot \frac{1}{2} = \frac{16\pi}{3} \approx {{ (data.V[1])|gost(4) }} \ \text{м/с}
         \]
         
         <h3>4.2 Модуль скорости</h3>
         \[
         V = \sqrt{\dot x^2 + \dot y^2} = \sqrt{\left(-\frac{8\pi\sqrt{3}}{3}\right)^2 + \left(\frac{16\pi}{3}\right)^2}
-        = \frac{8\pi}{3}\sqrt{3 + 4} = \frac{8\pi\sqrt{7}}{3} \approx {{ "%.4f"|format(data.V_mod) }} \ \text{м/с}
+        = \frac{8\pi}{3}\sqrt{3 + 4} = \frac{8\pi\sqrt{7}}{3} \approx {{ (data.V_mod)|gost(4) }} \ \text{м/с}
         \]
         
         <p>Вектор скорости в момент \(t = {{ data.t }}\) с:</p>
         \[
-        \vec V = \left({{ "%.4f"|format(data.V[0]) }};\ {{ "%.4f"|format(data.V[1]) }}\right) \ \text{м/с}
+        \vec V = \left({{ (data.V[0])|gost(4) }};\ {{ (data.V[1])|gost(4) }}\right) \ \text{м/с}
         \]
     </div>
 
@@ -202,22 +202,22 @@
         <p>Подставляем \(t = {{ data.t }}\) с:</p>
         \[
         \ddot x(1) = -\frac{16\pi}{3}\cdot\frac{\sqrt{3}}{2} - \frac{32\pi^2}{9}\cdot\frac{1}{2}
-        = -\frac{8\pi\sqrt{3}}{3} - \frac{16\pi^2}{9} \approx {{ "%.4f"|format(data.a[0]) }} \ \text{м/с}^2
+        = -\frac{8\pi\sqrt{3}}{3} - \frac{16\pi^2}{9} \approx {{ (data.a[0])|gost(4) }} \ \text{м/с}^2
         \]
         \[
         \ddot y(1) = \frac{32\pi}{3}\cdot\frac{1}{2} - \frac{64\pi^2}{9}\cdot\frac{\sqrt{3}}{2}
-        = \frac{16\pi}{3} - \frac{32\pi^2\sqrt{3}}{9} \approx {{ "%.4f"|format(data.a[1]) }} \ \text{м/с}^2
+        = \frac{16\pi}{3} - \frac{32\pi^2\sqrt{3}}{9} \approx {{ (data.a[1])|gost(4) }} \ \text{м/с}^2
         \]
 
         <h3>5.2 Модуль ускорения</h3>
         \[
-        a = \sqrt{\ddot x^2 + \ddot y^2} \approx \sqrt{({{ "%.4f"|format(data.a[0]) }})^2 + ({{ "%.4f"|format(data.a[1]) }})^2}
-        = {{ "%.4f"|format(data.a_mod) }} \ \text{м/с}^2
+        a = \sqrt{\ddot x^2 + \ddot y^2} \approx \sqrt{({{ (data.a[0])|gost(4) }})^2 + ({{ (data.a[1])|gost(4) }})^2}
+        = {{ (data.a_mod)|gost(4) }} \ \text{м/с}^2
         \]
         
         <p>Вектор ускорения в момент \(t = {{ data.t }}\) с:</p>
         \[
-        \vec a = \left({{ "%.4f"|format(data.a[0]) }};\ {{ "%.4f"|format(data.a[1]) }}\right) \ \text{м/с}^2
+        \vec a = \left({{ (data.a[0])|gost(4) }};\ {{ (data.a[1])|gost(4) }}\right) \ \text{м/с}^2
         \]
     </div>
 
@@ -250,14 +250,14 @@
                 <tr><th>Величина</th><th>Обозначение</th><th>Значение</th><th>Размерность</th></tr>
             </thead>
             <tbody>
-                <tr><td>Координата \(x\)</td><td>\(x(1)\)</td><td>{{ "%.4f"|format(data.point[0]) }}</td><td>м</td></tr>
-                <tr><td>Координата \(y\)</td><td>\(y(1)\)</td><td>{{ "%.4f"|format(data.point[1]) }}</td><td>м</td></tr>
-                <tr><td>Проекция скорости \(v_x\)</td><td>\(\dot x(1)\)</td><td>{{ "%.4f"|format(data.V[0]) }}</td><td>м/с</td></tr>
-                <tr><td>Проекция скорости \(v_y\)</td><td>\(\dot y(1)\)</td><td>{{ "%.4f"|format(data.V[1]) }}</td><td>м/с</td></tr>
-                <tr><td>Модуль скорости</td><td>\(V\)</td><td>{{ "%.4f"|format(data.V_mod) }}</td><td>м/с</td></tr>
-                <tr><td>Проекция ускорения \(a_x\)</td><td>\(\ddot x(1)\)</td><td>{{ "%.4f"|format(data.a[0]) }}</td><td>м/с²</td></tr>
-                <tr><td>Проекция ускорения \(a_y\)</td><td>\(\ddot y(1)\)</td><td>{{ "%.4f"|format(data.a[1]) }}</td><td>м/с²</td></tr>
-                <tr><td>Модуль ускорения</td><td>\(a\)</td><td>{{ "%.4f"|format(data.a_mod) }}</td><td>м/с²</td></tr>
+                <tr><td>Координата \(x\)</td><td>\(x(1)\)</td><td>{{ (data.point[0])|gostn(4) }}</td><td>м</td></tr>
+                <tr><td>Координата \(y\)</td><td>\(y(1)\)</td><td>{{ (data.point[1])|gostn(4) }}</td><td>м</td></tr>
+                <tr><td>Проекция скорости \(v_x\)</td><td>\(\dot x(1)\)</td><td>{{ (data.V[0])|gostn(4) }}</td><td>м/с</td></tr>
+                <tr><td>Проекция скорости \(v_y\)</td><td>\(\dot y(1)\)</td><td>{{ (data.V[1])|gostn(4) }}</td><td>м/с</td></tr>
+                <tr><td>Модуль скорости</td><td>\(V\)</td><td>{{ (data.V_mod)|gostn(4) }}</td><td>м/с</td></tr>
+                <tr><td>Проекция ускорения \(a_x\)</td><td>\(\ddot x(1)\)</td><td>{{ (data.a[0])|gostn(4) }}</td><td>м/с²</td></tr>
+                <tr><td>Проекция ускорения \(a_y\)</td><td>\(\ddot y(1)\)</td><td>{{ (data.a[1])|gostn(4) }}</td><td>м/с²</td></tr>
+                <tr><td>Модуль ускорения</td><td>\(a\)</td><td>{{ (data.a_mod)|gostn(4) }}</td><td>м/с²</td></tr>
             </tbody>
         </table>
     </div>

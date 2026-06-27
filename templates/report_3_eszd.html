@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.1/plotly.min.js"></script>
     <style>
-        body { margin: 0; padding: 10px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9f9f9; color: #333; line-height: 1.5; }
+        body { margin: 0; padding: 10px; font-family: 'Times New Roman', Times, serif; background-color: #f9f9f9; color: #333; line-height: 1.5; }
         .container { max-width: 1200px; margin: 0 auto; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         h1, h2, h3 { color: #0066cc; }
         .btn-group { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; margin-bottom: 20px; }
@@ -123,10 +123,10 @@
         <p>Подставляя \(t = {{ data.t }}\) (где \(\frac{\pi t^2}{3}=\frac{\pi}{3}\),
            \(\sin\frac{\pi}{3}=\frac{\sqrt3}{2}\), \(\cos\frac{\pi}{3}=\frac12\)):</p>
         \[
-        \dot x = {{ "%.4f"|format(data.vx) }},\quad
-        \dot y = {{ "%.4f"|format(data.vy) }},\quad
-        \ddot x = {{ "%.4f"|format(data.ax) }},\quad
-        \ddot y = {{ "%.4f"|format(data.ay) }}\quad(\text{м/с},\ \text{м/с}^2).
+        \dot x = {{ (data.vx)|gost(4) }},\quad
+        \dot y = {{ (data.vy)|gost(4) }},\quad
+        \ddot x = {{ (data.ax)|gost(4) }},\quad
+        \ddot y = {{ (data.ay)|gost(4) }}\quad(\text{м/с},\ \text{м/с}^2).
         \]
     </div>
 
@@ -142,7 +142,7 @@
         \[
         V = \frac{16\pi}{3}\sqrt{1 + 3\cos^2\frac{\pi}{3}}
           = \frac{16\pi}{3}\sqrt{1 + 3\cdot\tfrac14}
-          = {{ "%.4f"|format(data.V) }} \ \text{м/с}
+          = {{ (data.V)|gost(4) }} \ \text{м/с}
         \]
     </div>
 
@@ -159,10 +159,10 @@
         \]
         <p>Подставляя найденные в п. 2.1 значения:</p>
         \[
-        a_\tau = \frac{({{ "%.4f"|format(data.vx) }})({{ "%.4f"|format(data.ax) }})
-                      + ({{ "%.4f"|format(data.vy) }})({{ "%.4f"|format(data.ay) }})}
-                      {{ '{' }}{{ "%.4f"|format(data.V) }}{{ '}' }}
-               = {{ "%.4f"|format(data.a_tau) }} \ \text{м/с}^2
+        a_\tau = \frac{({{ (data.vx)|gost(4) }})({{ (data.ax)|gost(4) }})
+                      + ({{ (data.vy)|gost(4) }})({{ (data.ay)|gost(4) }})}
+                      {{ '{' }}{{ (data.V)|gost(4) }}{{ '}' }}
+               = {{ (data.a_tau)|gost(4) }} \ \text{м/с}^2
         \]
         <p><em>Примечание:</em> Если \(a_\tau > 0\) — скорость возрастает, если \(a_\tau < 0\) — скорость убывает.</p>
     </div>
@@ -175,8 +175,8 @@
            \(a^2 = a_\tau^2 + a_n^2\):</p>
         \[
         a_n = \sqrt{a^2 - a_\tau^2}
-            = \sqrt{({{ "%.4f"|format(data.a_mod) }})^2 - ({{ "%.4f"|format(data.a_tau) }})^2}
-            = {{ "%.4f"|format(data.a_n) }} \ \text{м/с}^2
+            = \sqrt{({{ (data.a_mod)|gost(4) }})^2 - ({{ (data.a_tau)|gost(4) }})^2}
+            = {{ (data.a_n)|gost(4) }} \ \text{м/с}^2
         \]
         <div class="explanation">
             <p><strong>Проверка</strong> (нормальное ускорение, найденное тремя независимыми способами,
@@ -185,16 +185,16 @@
                (поперечная к скорости составляющая \(\vec a\)):</p>
             \[
             a_n = \frac{|\dot x\,\ddot y - \dot y\,\ddot x|}{V}
-                = \frac{|({{ "%.4f"|format(data.vx) }})({{ "%.4f"|format(data.ay) }})
-                       - ({{ "%.4f"|format(data.vy) }})({{ "%.4f"|format(data.ax) }})|}
-                       {{ '{' }}{{ "%.4f"|format(data.V) }}{{ '}' }}
-                = {{ "%.4f"|format(data.a_n_cross) }} \ \text{м/с}^2
+                = \frac{|({{ (data.vx)|gost(4) }})({{ (data.ay)|gost(4) }})
+                       - ({{ (data.vy)|gost(4) }})({{ (data.ax)|gost(4) }})|}
+                       {{ '{' }}{{ (data.V)|gost(4) }}{{ '}' }}
+                = {{ (data.a_n_cross)|gost(4) }} \ \text{м/с}^2
             \]
             <p>2) Через радиус кривизны \(\rho\) (см. п. 2.5):</p>
             \[
             a_n = \frac{V^2}{\rho}
-                = \frac{({{ "%.4f"|format(data.V) }})^2}{{ '{' }}{{ "%.4f"|format(data.rho) }}{{ '}' }}
-                = {{ "%.4f"|format(data.a_n_rho) }} \ \text{м/с}^2
+                = \frac{({{ (data.V)|gost(4) }})^2}{{ '{' }}{{ (data.rho)|gost(4) }}{{ '}' }}
+                = {{ (data.a_n_rho)|gost(4) }} \ \text{м/с}^2
             \]
             <p>Все три значения совпадают \(\Rightarrow\) расчёт нормального ускорения верен.</p>
         </div>
@@ -207,7 +207,7 @@
         \]
         <p>В момент \(t = {{ data.t }}\) с:</p>
         \[
-        \rho = {{ "%.4f"|format(data.rho) }} \ \text{м}
+        \rho = {{ (data.rho)|gost(4) }} \ \text{м}
         \]
         <p><em>Физический смысл:</em> радиус кривизны показывает, насколько траектория искривлена. Чем меньше \(\rho\), тем сильнее изгиб.</p>
     </div>
@@ -231,7 +231,7 @@
            <strong>численно</strong> (адаптивная квадратура). В момент \(t = {{ data.t }}\) с:</p>
         \[
         s = \int_0^{1} \frac{16\pi\xi}{3}\sqrt{1+3\cos^2\frac{\pi\xi^2}{3}}\;d\xi
-          \approx {{ "%.4f"|format(data.s) }} \ \text{м}
+          \approx {{ (data.s)|gost(4) }} \ \text{м}
         \]
     </div>
 
@@ -244,7 +244,7 @@
         \]
         <p>Модуль полного ускорения:</p>
         \[
-        a = \sqrt{a_\tau^2 + a_n^2} = {{ "%.4f"|format(data.a_mod) }} \ \text{м/с}^2
+        a = \sqrt{a_\tau^2 + a_n^2} = {{ (data.a_mod)|gost(4) }} \ \text{м/с}^2
         \]
     </div>
 
@@ -277,14 +277,14 @@
                 <tr><th>Величина</th><th>Обозначение</th><th>Значение</th><th>Размерность</th></tr>
             </thead>
             <tbody>
-                <tr><td>Координата \(x\)</td><td>\(x(1)\)</td><td>{{ "%.4f"|format(data.point[0]) }}</td><td>м</td></tr>
-                <tr><td>Координата \(y\)</td><td>\(y(1)\)</td><td>{{ "%.4f"|format(data.point[1]) }}</td><td>м</td></tr>
-                <tr><td>Модуль скорости</td><td>\(V\)</td><td>{{ "%.4f"|format(data.V) }}</td><td>м/с</td></tr>
-                <tr><td>Касательное ускорение</td><td>\(a_\tau\)</td><td>{{ "%.4f"|format(data.a_tau) }}</td><td>м/с²</td></tr>
-                <tr><td>Нормальное ускорение</td><td>\(a_n\)</td><td>{{ "%.4f"|format(data.a_n) }}</td><td>м/с²</td></tr>
-                <tr><td>Модуль ускорения</td><td>\(a\)</td><td>{{ "%.4f"|format(data.a_mod) }}</td><td>м/с²</td></tr>
-                <tr><td>Радиус кривизны</td><td>\(\rho\)</td><td>{{ "%.4f"|format(data.rho) }}</td><td>м</td></tr>
-                <tr><td>Дуговая координата</td><td>\(s\)</td><td>{{ "%.4f"|format(data.s) }}</td><td>м</td></tr>
+                <tr><td>Координата \(x\)</td><td>\(x(1)\)</td><td>{{ (data.point[0])|gostn(4) }}</td><td>м</td></tr>
+                <tr><td>Координата \(y\)</td><td>\(y(1)\)</td><td>{{ (data.point[1])|gostn(4) }}</td><td>м</td></tr>
+                <tr><td>Модуль скорости</td><td>\(V\)</td><td>{{ (data.V)|gostn(4) }}</td><td>м/с</td></tr>
+                <tr><td>Касательное ускорение</td><td>\(a_\tau\)</td><td>{{ (data.a_tau)|gostn(4) }}</td><td>м/с²</td></tr>
+                <tr><td>Нормальное ускорение</td><td>\(a_n\)</td><td>{{ (data.a_n)|gostn(4) }}</td><td>м/с²</td></tr>
+                <tr><td>Модуль ускорения</td><td>\(a\)</td><td>{{ (data.a_mod)|gostn(4) }}</td><td>м/с²</td></tr>
+                <tr><td>Радиус кривизны</td><td>\(\rho\)</td><td>{{ (data.rho)|gostn(4) }}</td><td>м</td></tr>
+                <tr><td>Дуговая координата</td><td>\(s\)</td><td>{{ (data.s)|gostn(4) }}</td><td>м</td></tr>
             </tbody>
         </table>
     </div>

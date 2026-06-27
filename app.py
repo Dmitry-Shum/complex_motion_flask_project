@@ -29,6 +29,29 @@ from export_utils import generate_export_pdf, generate_export_word
 app = Flask(__name__)
 
 
+# Форматирование чисел по ГОСТ: десятичный разделитель — запятая.
+#   gost  — для использования ВНУТРИ формул MathJax (\[ ... \], \( ... \));
+#           выводит "13{,}8564", где {,} даёт правильный (без лишнего пробела)
+#           десятичный разделитель в математическом режиме TeX.
+#   gostn — для обычного HTML-текста и ячеек таблиц; выводит "13,8564".
+def gost_number(value, prec=4):
+    try:
+        return ('%.*f' % (int(prec), float(value))).replace('.', '{,}')
+    except (TypeError, ValueError):
+        return value
+
+
+def gost_number_plain(value, prec=4):
+    try:
+        return ('%.*f' % (int(prec), float(value))).replace('.', ',')
+    except (TypeError, ValueError):
+        return value
+
+
+app.jinja_env.filters['gost'] = gost_number
+app.jinja_env.filters['gostn'] = gost_number_plain
+
+
 # Маршруты
 @app.route('/')
 @app.route('/dsk')

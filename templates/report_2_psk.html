@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.1/plotly.min.js"></script>
     <style>
-        body { margin: 0; padding: 10px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9f9f9; color: #333; line-height: 1.5; }
+        body { margin: 0; padding: 10px; font-family: 'Times New Roman', Times, serif; background-color: #f9f9f9; color: #333; line-height: 1.5; }
         .container { max-width: 1200px; margin: 0 auto; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         h1, h2, h3 { color: #0066cc; }
         .btn-group { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; margin-bottom: 20px; }
@@ -102,21 +102,21 @@
         x(1) = 8\cos\left(\frac{\pi}{3}\right) = 8 \cdot \frac{1}{2} = 4 \ \text{м}
         \]
         \[
-        y(1) = 16\sin\left(\frac{\pi}{3}\right) = 16 \cdot \frac{\sqrt{3}}{2} = 8\sqrt{3} \approx 13.8564 \ \text{м}
+        y(1) = 16\sin\left(\frac{\pi}{3}\right) = 16 \cdot \frac{\sqrt{3}}{2} = 8\sqrt{3} \approx 13{,}8564 \ \text{м}
         \]
     </div>
 
     <h3>Радиальная координата \(r\)</h3>
     <div class="formula">
         \[
-        r = \sqrt{x^2 + y^2} = \sqrt{4^2 + (8\sqrt{3})^2} = \sqrt{16 + 192} = \sqrt{208} = 4\sqrt{13} \approx {{ "%.4f"|format(data.r) }} \ \text{м}
+        r = \sqrt{x^2 + y^2} = \sqrt{4^2 + (8\sqrt{3})^2} = \sqrt{16 + 192} = \sqrt{208} = 4\sqrt{13} \approx {{ (data.r)|gost(4) }} \ \text{м}
         \]
     </div>
 
     <h3>Угловая координата \(\varphi\)</h3>
     <div class="formula">
         \[
-        \varphi = \operatorname{arctg}\frac{y}{x} = \operatorname{arctg}\frac{8\sqrt{3}}{4} = \operatorname{arctg}(2\sqrt{3}) \approx {{ "%.4f"|format(data.phi) }} \ \text{рад} \ ({{ "%.1f"|format(data.phi * 180 / 3.14159) }}^\circ)
+        \varphi = \operatorname{arctg}\frac{y}{x} = \operatorname{arctg}\frac{8\sqrt{3}}{4} = \operatorname{arctg}(2\sqrt{3}) \approx {{ (data.phi)|gost(4) }} \ \text{рад} \ ({{ (data.phi * 180 / 3.14159)|gost(1) }}^\circ)
         \]
     </div>
 
@@ -143,10 +143,10 @@
            дифференцированием этих связей по времени (через \(\dot x,\dot y,\ddot x,\ddot y\)).
            Производные координат в момент \(t={{ data.t }}\) (из блока ДСК):</p>
         \[
-        \dot x = {{ "%.4f"|format(data.vx) }},\quad
-        \dot y = {{ "%.4f"|format(data.vy) }},\quad
-        \ddot x = {{ "%.4f"|format(data.ax) }},\quad
-        \ddot y = {{ "%.4f"|format(data.ay) }}.
+        \dot x = {{ (data.vx)|gost(4) }},\quad
+        \dot y = {{ (data.vy)|gost(4) }},\quad
+        \ddot x = {{ (data.ax)|gost(4) }},\quad
+        \ddot y = {{ (data.ay)|gost(4) }}.
         \]
     </div>
     <div class="formula">
@@ -157,10 +157,10 @@
                = \frac{x\dot x + y\dot y}{r}
         \]
         \[
-        \dot r = \frac{({{ "%.4f"|format(data.point[0]) }})({{ "%.4f"|format(data.vx) }})
-                     + ({{ "%.4f"|format(data.point[1]) }})({{ "%.4f"|format(data.vy) }})}
-                     {{ '{' }}{{ "%.4f"|format(data.r) }}{{ '}' }}
-               = {{ "%.4f"|format(data.dr_dt) }} \ \text{м/с}
+        \dot r = \frac{({{ (data.point[0])|gost(4) }})({{ (data.vx)|gost(4) }})
+                     + ({{ (data.point[1])|gost(4) }})({{ (data.vy)|gost(4) }})}
+                     {{ '{' }}{{ (data.r)|gost(4) }}{{ '}' }}
+               = {{ (data.dr_dt)|gost(4) }} \ \text{м/с}
         \]
         <p><strong>Первая производная \(\dot\varphi\).</strong> Дифференцируем
            \(\varphi=\operatorname{arctg}\dfrac{y}{x}\)
@@ -168,10 +168,10 @@
         \[
         \dot \varphi = \frac{x\dot y - y\dot x}{x^2+y^2}
                      = \frac{x\dot y - y\dot x}{r^2}
-                     = \frac{({{ "%.4f"|format(data.point[0]) }})({{ "%.4f"|format(data.vy) }})
-                           - ({{ "%.4f"|format(data.point[1]) }})({{ "%.4f"|format(data.vx) }})}
-                           {{ '{' }}{{ "%.4f"|format(data.r) }}^2{{ '}' }}
-                     = {{ "%.4f"|format(data.dphi_dt) }} \ \text{рад/с}
+                     = \frac{({{ (data.point[0])|gost(4) }})({{ (data.vy)|gost(4) }})
+                           - ({{ (data.point[1])|gost(4) }})({{ (data.vx)|gost(4) }})}
+                           {{ '{' }}{{ (data.r)|gost(4) }}^2{{ '}' }}
+                     = {{ (data.dphi_dt)|gost(4) }} \ \text{рад/с}
         \]
     </div>
 
@@ -179,15 +179,15 @@
     <div class="formula">
         <p>Радиальная скорость:</p>
         \[
-        V_r = \dot r = {{ "%.4f"|format(data.Vr) }} \ \text{м/с}
+        V_r = \dot r = {{ (data.Vr)|gost(4) }} \ \text{м/с}
         \]
         <p>Трансверсальная скорость:</p>
         \[
-        V_\varphi = r \dot \varphi = {{ "%.4f"|format(data.r) }} \cdot {{ "%.4f"|format(data.dphi_dt) }} = {{ "%.4f"|format(data.Vphi) }} \ \text{м/с}
+        V_\varphi = r \dot \varphi = {{ (data.r)|gost(4) }} \cdot {{ (data.dphi_dt)|gost(4) }} = {{ (data.Vphi)|gost(4) }} \ \text{м/с}
         \]
         <p>Модуль скорости:</p>
         \[
-        V = \sqrt{V_r^2 + V_\varphi^2} = \sqrt{({{ "%.4f"|format(data.Vr) }})^2 + ({{ "%.4f"|format(data.Vphi) }})^2} = {{ "%.4f"|format(data.V_mod) }} \ \text{м/с}
+        V = \sqrt{V_r^2 + V_\varphi^2} = \sqrt{({{ (data.Vr)|gost(4) }})^2 + ({{ (data.Vphi)|gost(4) }})^2} = {{ (data.V_mod)|gost(4) }} \ \text{м/с}
         \]
     </div>
 
@@ -214,13 +214,13 @@
            (числитель даёт \(\dot x^2 + x\ddot x + \dot y^2 + y\ddot y\), и вычитается \(\dot r^2\)):</p>
         \[
         \ddot r = \frac{\dot x^2 + \dot y^2 + x\ddot x + y\ddot y - \dot r^2}{r}
-                = {{ "%.4f"|format(data.d2r_dt2) }} \ \text{м/с}^2
+                = {{ (data.d2r_dt2)|gost(4) }} \ \text{м/с}^2
         \]
         <p><strong>Вторая производная \(\ddot\varphi\).</strong> Дифференцируем
            \(\dot\varphi = \dfrac{x\dot y - y\dot x}{r^2}\) по времени:</p>
         \[
         \ddot \varphi = \frac{x\ddot y - y\ddot x}{r^2} - \frac{2\dot r\,\dot\varphi}{r}
-                      = {{ "%.4f"|format(data.d2phi_dt2) }} \ \text{рад/с}^2
+                      = {{ (data.d2phi_dt2)|gost(4) }} \ \text{рад/с}^2
         \]
     </div>
 
@@ -228,15 +228,15 @@
     <div class="formula">
         <p>Радиальная составляющая:</p>
         \[
-        a_r = \ddot r - r \dot \varphi^2 = {{ "%.4f"|format(data.d2r_dt2) }} - {{ "%.4f"|format(data.r) }} \cdot ({{ "%.4f"|format(data.dphi_dt) }})^2 = {{ "%.4f"|format(data.ar) }} \ \text{м/с}^2
+        a_r = \ddot r - r \dot \varphi^2 = {{ (data.d2r_dt2)|gost(4) }} - {{ (data.r)|gost(4) }} \cdot ({{ (data.dphi_dt)|gost(4) }})^2 = {{ (data.ar)|gost(4) }} \ \text{м/с}^2
         \]
         <p>Трансверсальная составляющая:</p>
         \[
-        a_\varphi = r \ddot \varphi + 2 \dot r \dot \varphi = {{ "%.4f"|format(data.r) }} \cdot {{ "%.4f"|format(data.d2phi_dt2) }} + 2 \cdot {{ "%.4f"|format(data.dr_dt) }} \cdot {{ "%.4f"|format(data.dphi_dt) }} = {{ "%.4f"|format(data.aphi) }} \ \text{м/с}^2
+        a_\varphi = r \ddot \varphi + 2 \dot r \dot \varphi = {{ (data.r)|gost(4) }} \cdot {{ (data.d2phi_dt2)|gost(4) }} + 2 \cdot {{ (data.dr_dt)|gost(4) }} \cdot {{ (data.dphi_dt)|gost(4) }} = {{ (data.aphi)|gost(4) }} \ \text{м/с}^2
         \]
         <p>Модуль ускорения:</p>
         \[
-        a = \sqrt{a_r^2 + a_\varphi^2} = \sqrt{({{ "%.4f"|format(data.ar) }})^2 + ({{ "%.4f"|format(data.aphi) }})^2} = {{ "%.4f"|format(data.a_mod) }} \ \text{м/с}^2
+        a = \sqrt{a_r^2 + a_\varphi^2} = \sqrt{({{ (data.ar)|gost(4) }})^2 + ({{ (data.aphi)|gost(4) }})^2} = {{ (data.a_mod)|gost(4) }} \ \text{м/с}^2
         \]
         <p><em>Примечание:</em> Радиальная составляющая включает центростремительное ускорение \(-r\dot\varphi^2\). Трансверсальная составляющая включает кориолисово ускорение \(2\dot r \dot\varphi\).</p>
     </div>
@@ -270,14 +270,14 @@
                 <tr><th>Величина</th><th>Обозначение</th><th>Значение</th><th>Размерность</th></tr>
             </thead>
             <tbody>
-                <tr><td>Радиальная координата</td><td>\(r\)</td><td>{{ "%.4f"|format(data.r) }}</td><td>м</td></tr>
-                <tr><td>Угловая координата</td><td>\(\varphi\)</td><td>{{ "%.4f"|format(data.phi) }}</td><td>рад</td></tr>
-                <tr><td>Радиальная скорость</td><td>\(V_r = \dot r\)</td><td>{{ "%.4f"|format(data.Vr) }}</td><td>м/с</td></tr>
-                <tr><td>Трансверсальная скорость</td><td>\(V_\varphi = r\dot\varphi\)</td><td>{{ "%.4f"|format(data.Vphi) }}</td><td>м/с</td></tr>
-                <tr><td>Модуль скорости</td><td>\(V\)</td><td>{{ "%.4f"|format(data.V_mod) }}</td><td>м/с</td></tr>
-                <tr><td>Радиальное ускорение</td><td>\(a_r = \ddot r - r\dot\varphi^2\)</td><td>{{ "%.4f"|format(data.ar) }}</td><td>м/с²</td></tr>
-                <tr><td>Трансверсальное ускорение</td><td>\(a_\varphi = r\ddot\varphi + 2\dot r\dot\varphi\)</td><td>{{ "%.4f"|format(data.aphi) }}</td><td>м/с²</td></tr>
-                <tr><td>Модуль ускорения</td><td>\(a\)</td><td>{{ "%.4f"|format(data.a_mod) }}</td><td>м/с²</td></tr>
+                <tr><td>Радиальная координата</td><td>\(r\)</td><td>{{ (data.r)|gostn(4) }}</td><td>м</td></tr>
+                <tr><td>Угловая координата</td><td>\(\varphi\)</td><td>{{ (data.phi)|gostn(4) }}</td><td>рад</td></tr>
+                <tr><td>Радиальная скорость</td><td>\(V_r = \dot r\)</td><td>{{ (data.Vr)|gostn(4) }}</td><td>м/с</td></tr>
+                <tr><td>Трансверсальная скорость</td><td>\(V_\varphi = r\dot\varphi\)</td><td>{{ (data.Vphi)|gostn(4) }}</td><td>м/с</td></tr>
+                <tr><td>Модуль скорости</td><td>\(V\)</td><td>{{ (data.V_mod)|gostn(4) }}</td><td>м/с</td></tr>
+                <tr><td>Радиальное ускорение</td><td>\(a_r = \ddot r - r\dot\varphi^2\)</td><td>{{ (data.ar)|gostn(4) }}</td><td>м/с²</td></tr>
+                <tr><td>Трансверсальное ускорение</td><td>\(a_\varphi = r\ddot\varphi + 2\dot r\dot\varphi\)</td><td>{{ (data.aphi)|gostn(4) }}</td><td>м/с²</td></tr>
+                <tr><td>Модуль ускорения</td><td>\(a\)</td><td>{{ (data.a_mod)|gostn(4) }}</td><td>м/с²</td></tr>
             </tbody>
         </table>
     </div>

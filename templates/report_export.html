@@ -11,12 +11,12 @@
         body {
             margin: 0;
             padding: 10px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
         }
     </style>
     {% endif %}
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f9f9f9; color: #333; }
+        body { font-family: 'Times New Roman', Times, serif; margin: 20px; background-color: #f9f9f9; color: #333; }
         .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         h1, h2, h3 { color: #0066cc; }
         .formula { background: #f0f0f0; padding: 10px; border-radius: 5px; overflow-x: auto; margin: 10px 0; text-align: center; }
@@ -78,8 +78,8 @@
         <img src="data:image/png;base64,{{ formula_images.dydt }}" alt="ẏ">
         <br>
         При \( t = 1 \):<br>
-        ẋ = {{ "%.4f"|format(data.V_rel[0]) }},  ẏ = {{ "%.4f"|format(data.V_rel[1]) }}<br>
-        V<sub>отн</sub> = √(ẋ² + ẏ²) = {{ "%.4f"|format(data.V_rel_mod) }} м/с
+        ẋ = {{ (data.V_rel[0])|gost(4) }},  ẏ = {{ (data.V_rel[1])|gost(4) }}<br>
+        V<sub>отн</sub> = √(ẋ² + ẏ²) = {{ (data.V_rel_mod)|gost(4) }} м/с
     </div>
 
     <h3>Ускорение точки относительно подвижной системы</h3>
@@ -88,7 +88,7 @@
         <img src="data:image/png;base64,{{ formula_images.d2ydt2 }}" alt="ÿ">
         <br>
         При \( t = 1 \):<br>
-        ẍ = {{ "%.4f"|format(data.a_rel[0]) }},  ÿ = {{ "%.4f"|format(data.a_rel[1]) }}
+        ẍ = {{ (data.a_rel[0])|gost(4) }},  ÿ = {{ (data.a_rel[1])|gost(4) }}
     </div>
 
     <!-- ----------------------------------------------------------------- -->
@@ -107,9 +107,9 @@
         <img src="data:image/png;base64,{{ formula_images.dzpdt }}" alt="ż'">
         <img src="data:image/png;base64,{{ formula_images.d2zpdt2 }}" alt="z̈'">
         <br>
-        При \( t = 1 \): ż' = {{ "%.4f"|format(data.dzpdt) }},  z̈' = {{ "%.4f"|format(data.d2zpdt2) }}<br>
-        Скорость поступательного переноса: V<sub>пер,пост</sub> = (0,0,{{ "%.4f"|format(data.dzpdt) }})<br>
-        Ускорение: a<sub>пер,пост</sub> = (0,0,{{ "%.4f"|format(data.d2zpdt2) }})
+        При \( t = 1 \): ż' = {{ (data.dzpdt)|gost(4) }},  z̈' = {{ (data.d2zpdt2)|gost(4) }}<br>
+        Скорость поступательного переноса: V<sub>пер,пост</sub> = (0,0,{{ (data.dzpdt)|gost(4) }})<br>
+        Ускорение: a<sub>пер,пост</sub> = (0,0,{{ (data.d2zpdt2)|gost(4) }})
     </div>
 
     <h3>Вращательная часть</h3>
@@ -118,29 +118,29 @@
         <img src="data:image/png;base64,{{ formula_images.dphi_dt }}" alt="φ̇'">
         <img src="data:image/png;base64,{{ formula_images.d2phi_dt2 }}" alt="φ̈'">
         <br>
-        При \( t = 1 \): φ' = {{ "%.4f"|format(data.phi) }},  ω = φ̇' = {{ "%.4f"|format(data.omega) }},  α = φ̈' = {{ "%.4f"|format(data.alpha) }}<br>
-        Вектор угловой скорости: ω = (0,0,{{ "%.4f"|format(data.omega) }})
+        При \( t = 1 \): φ' = {{ (data.phi)|gost(4) }},  ω = φ̇' = {{ (data.omega)|gost(4) }},  α = φ̈' = {{ (data.alpha)|gost(4) }}<br>
+        Вектор угловой скорости: ω = (0,0,{{ (data.omega)|gost(4) }})
     </div>
 
     <div class="explanation">
         <p>Радиус-вектор точки \(M\) в подвижной системе в момент \(t=1\):</p>
         \[
-        \mathbf{r}_{\text{отн}} = ({{ "%.4f"|format(data.V_rel[0]) }}, {{ "%.4f"|format(data.V_rel[1]) }}, 0)
+        \mathbf{r}_{\text{отн}} = ({{ (data.V_rel[0])|gost(4) }}, {{ (data.V_rel[1])|gost(4) }}, 0)
         \]
     </div>
 
     <h3>Переносная скорость (вращательная)</h3>
     <div class="formula">
-        V<sub>пер,вр</sub> = ω × r<sub>отн</sub> = ({{ "%.4f"|format(data.V_rot[0]) }}, {{ "%.4f"|format(data.V_rot[1]) }}, 0)<br>
-        Модуль: {{ "%.4f"|format(data.V_rot_mod) }} м/с.
+        V<sub>пер,вр</sub> = ω × r<sub>отн</sub> = ({{ (data.V_rot[0])|gost(4) }}, {{ (data.V_rot[1])|gost(4) }}, 0)<br>
+        Модуль: {{ (data.V_rot_mod)|gost(4) }} м/с.
     </div>
 
     <h3>Переносное ускорение</h3>
     <div class="formula">
-        Центростремительное: a<sub>ц</sub> = –ω² r<sub>отн</sub> = ({{ "%.4f"|format(data.a_centr[0]) }}, {{ "%.4f"|format(data.a_centr[1]) }}, 0)<br>
-        Вращательное: a<sub>вр</sub> = α × r<sub>отн</sub> = ({{ "%.4f"|format(data.a_rot[0]) }}, {{ "%.4f"|format(data.a_rot[1]) }}, {{ "%.4f"|format(data.a_rot[2]) }})<br>
-        Поступательное: a<sub>пост</sub> = (0,0,{{ "%.4f"|format(data.d2zpdt2) }})<br>
-        Суммируем: a<sub>пер</sub> = ({{ "%.4f"|format(data.a_centr[0]) }}, {{ "%.4f"|format(data.a_centr[1]) }}, {{ "%.4f"|format(data.d2zpdt2) }})
+        Центростремительное: a<sub>ц</sub> = –ω² r<sub>отн</sub> = ({{ (data.a_centr[0])|gost(4) }}, {{ (data.a_centr[1])|gost(4) }}, 0)<br>
+        Вращательное: a<sub>вр</sub> = α × r<sub>отн</sub> = ({{ (data.a_rot[0])|gost(4) }}, {{ (data.a_rot[1])|gost(4) }}, {{ (data.a_rot[2])|gost(4) }})<br>
+        Поступательное: a<sub>пост</sub> = (0,0,{{ (data.d2zpdt2)|gost(4) }})<br>
+        Суммируем: a<sub>пер</sub> = ({{ (data.a_centr[0])|gost(4) }}, {{ (data.a_centr[1])|gost(4) }}, {{ (data.d2zpdt2)|gost(4) }})
     </div>
 
     <!-- ----------------------------------------------------------------- -->
@@ -152,31 +152,31 @@
 
     <h3>Абсолютная скорость</h3>
     <div class="formula">
-        V<sub>отн</sub> = ({{ "%.4f"|format(data.V_rel[0]) }}, {{ "%.4f"|format(data.V_rel[1]) }}, 0)<br>
-        V<sub>пер,пост</sub> = (0,0,{{ "%.4f"|format(data.dzpdt) }})<br>
-        V<sub>пер,вр</sub> = ({{ "%.4f"|format(data.V_rot[0]) }}, {{ "%.4f"|format(data.V_rot[1]) }}, 0)<br>
-        Сумма: V<sub>абс</sub> = ({{ "%.4f"|format(data.V_abs[0]) }}, {{ "%.4f"|format(data.V_abs[1]) }}, {{ "%.4f"|format(data.V_abs[2]) }})<br>
-        Модуль: {{ "%.4f"|format(data.V_abs_mod) }} м/с.
+        V<sub>отн</sub> = ({{ (data.V_rel[0])|gost(4) }}, {{ (data.V_rel[1])|gost(4) }}, 0)<br>
+        V<sub>пер,пост</sub> = (0,0,{{ (data.dzpdt)|gost(4) }})<br>
+        V<sub>пер,вр</sub> = ({{ (data.V_rot[0])|gost(4) }}, {{ (data.V_rot[1])|gost(4) }}, 0)<br>
+        Сумма: V<sub>абс</sub> = ({{ (data.V_abs[0])|gost(4) }}, {{ (data.V_abs[1])|gost(4) }}, {{ (data.V_abs[2])|gost(4) }})<br>
+        Модуль: {{ (data.V_abs_mod)|gost(4) }} м/с.
     </div>
 
     <h3>Ускорение Кориолиса</h3>
     <div class="formula">
-        a<sub>кор</sub> = 2 ω × V<sub>отн</sub> = ({{ "%.4f"|format(data.a_cor[0]) }}, {{ "%.4f"|format(data.a_cor[1]) }}, 0)<br>
-        Модуль: {{ "%.4f"|format(data.a_cor_mod) }} м/с².
+        a<sub>кор</sub> = 2 ω × V<sub>отн</sub> = ({{ (data.a_cor[0])|gost(4) }}, {{ (data.a_cor[1])|gost(4) }}, 0)<br>
+        Модуль: {{ (data.a_cor_mod)|gost(4) }} м/с².
     </div>
 
     <h3>Абсолютное ускорение</h3>
     <div class="formula">
-        a<sub>отн</sub> = ({{ "%.4f"|format(data.a_rel[0]) }}, {{ "%.4f"|format(data.a_rel[1]) }}, 0)<br>
-        a<sub>пер</sub> = ({{ "%.4f"|format(data.a_centr[0]) }}, {{ "%.4f"|format(data.a_centr[1]) }}, {{ "%.4f"|format(data.d2zpdt2) }})<br>
-        a<sub>кор</sub> = ({{ "%.4f"|format(data.a_cor[0]) }}, {{ "%.4f"|format(data.a_cor[1]) }}, 0)<br>
-        Сумма: a<sub>абс</sub> = ({{ "%.4f"|format(data.a_abs[0]) }}, {{ "%.4f"|format(data.a_abs[1]) }}, {{ "%.4f"|format(data.a_abs[2]) }})<br>
-        Модуль: {{ "%.4f"|format(data.a_abs_mod) }} м/с².
+        a<sub>отн</sub> = ({{ (data.a_rel[0])|gost(4) }}, {{ (data.a_rel[1])|gost(4) }}, 0)<br>
+        a<sub>пер</sub> = ({{ (data.a_centr[0])|gost(4) }}, {{ (data.a_centr[1])|gost(4) }}, {{ (data.d2zpdt2)|gost(4) }})<br>
+        a<sub>кор</sub> = ({{ (data.a_cor[0])|gost(4) }}, {{ (data.a_cor[1])|gost(4) }}, 0)<br>
+        Сумма: a<sub>абс</sub> = ({{ (data.a_abs[0])|gost(4) }}, {{ (data.a_abs[1])|gost(4) }}, {{ (data.a_abs[2])|gost(4) }})<br>
+        Модуль: {{ (data.a_abs_mod)|gost(4) }} м/с².
     </div>
 
     <h3>Радиус кривизны абсолютной траектории</h3>
     <div class="formula">
-        ρ = V<sub>абс</sub>³ / |V<sub>абс</sub> × a<sub>абс</sub>| ≈ {{ "%.4f"|format(data.rho) }} м
+        ρ = V<sub>абс</sub>³ / |V<sub>абс</sub> × a<sub>абс</sub>| ≈ {{ (data.rho)|gost(4) }} м
     </div>
 
     <!-- ----------------------------------------------------------------- -->
@@ -212,18 +212,18 @@
         <thead>
             <tr><th>Величина</th><th>Значение</th><th>Размерность</th> </thead>
         <tbody>
-            <tr><td>Координаты точки M</td><td>({{ "%.4f"|format(data.point[0]) }}, {{ "%.4f"|format(data.point[1]) }}, {{ "%.4f"|format(data.point[2]) }})</td><td>м</td> </tr>
-            <tr><td>Относительная скорость V<sub>отн</sub></td><td>{{ "%.4f"|format(data.V_rel_mod) }}</td><td>м/с</td> </tr>
-            <tr><td>Переносная скорость (вращательная) V<sub>вр</sub></td><td>{{ "%.4f"|format(data.V_rot_mod) }}</td><td>м/с</td> </tr>
-            <tr><td>Переносная скорость (поступательная) V<sub>пост</sub></td><td>{{ "%.4f"|format(data.V_trans_post_mod) }}</td><td>м/с</td> </tr>
-            <tr><td>Абсолютная скорость V<sub>абс</sub></td><td>{{ "%.4f"|format(data.V_abs_mod) }}</td><td>м/с</td> </tr>
-            <tr><td>Относительное ускорение a<sub>отн</sub></td><td>{{ "%.4f"|format(data.a_rel_mod) }}</td><td>м/с²</td> </tr>
-            <tr><td>Центростремительное ускорение a<sub>ц</sub></td><td>{{ "%.4f"|format(data.a_centr_mod) }}</td><td>м/с²</td> </tr>
-            <tr><td>Вращательное ускорение a<sub>вр</sub></td><td>{{ "%.4f"|format(data.a_rot_mod) }}</td><td>м/с²</td> </tr>
-            <tr><td>Поступательное ускорение a<sub>пост</sub></td><td>{{ "%.4f"|format(data.a_trans_post_mod) }}</td><td>м/с²</td> </tr>
-            <tr><td>Ускорение Кориолиса a<sub>кор</sub></td><td>{{ "%.4f"|format(data.a_cor_mod) }}</td><td>м/с²</td> </tr>
-            <tr><td>Абсолютное ускорение a<sub>абс</sub></td><td>{{ "%.4f"|format(data.a_abs_mod) }}</td><td>м/с²</td> </tr>
-            <tr><td>Радиус кривизны ρ</td><td>{{ "%.4f"|format(data.rho) }}</td><td>м</td> </tr>
+            <tr><td>Координаты точки M</td><td>({{ (data.point[0])|gostn(4) }}, {{ (data.point[1])|gostn(4) }}, {{ (data.point[2])|gostn(4) }})</td><td>м</td> </tr>
+            <tr><td>Относительная скорость V<sub>отн</sub></td><td>{{ (data.V_rel_mod)|gostn(4) }}</td><td>м/с</td> </tr>
+            <tr><td>Переносная скорость (вращательная) V<sub>вр</sub></td><td>{{ (data.V_rot_mod)|gostn(4) }}</td><td>м/с</td> </tr>
+            <tr><td>Переносная скорость (поступательная) V<sub>пост</sub></td><td>{{ (data.V_trans_post_mod)|gostn(4) }}</td><td>м/с</td> </tr>
+            <tr><td>Абсолютная скорость V<sub>абс</sub></td><td>{{ (data.V_abs_mod)|gostn(4) }}</td><td>м/с</td> </tr>
+            <tr><td>Относительное ускорение a<sub>отн</sub></td><td>{{ (data.a_rel_mod)|gostn(4) }}</td><td>м/с²</td> </tr>
+            <tr><td>Центростремительное ускорение a<sub>ц</sub></td><td>{{ (data.a_centr_mod)|gostn(4) }}</td><td>м/с²</td> </tr>
+            <tr><td>Вращательное ускорение a<sub>вр</sub></td><td>{{ (data.a_rot_mod)|gostn(4) }}</td><td>м/с²</td> </tr>
+            <tr><td>Поступательное ускорение a<sub>пост</sub></td><td>{{ (data.a_trans_post_mod)|gostn(4) }}</td><td>м/с²</td> </tr>
+            <tr><td>Ускорение Кориолиса a<sub>кор</sub></td><td>{{ (data.a_cor_mod)|gostn(4) }}</td><td>м/с²</td> </tr>
+            <tr><td>Абсолютное ускорение a<sub>абс</sub></td><td>{{ (data.a_abs_mod)|gostn(4) }}</td><td>м/с²</td> </tr>
+            <tr><td>Радиус кривизны ρ</td><td>{{ (data.rho)|gostn(4) }}</td><td>м</td> </tr>
         </tbody>
     </table>
 
