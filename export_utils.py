@@ -1,4 +1,5 @@
 import os
+import shutil
 import tempfile
 import pdfkit
 import pypandoc
@@ -8,14 +9,17 @@ from app_helpers import latex_to_png
 
 os.makedirs('static', exist_ok=True)
 
-# Настройка wkhtmltopdf
-WKHTMLTOPDF_PATH = '/usr/bin/wkhtmltopdf'
-WKHTMLTOPDF_PATH = 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
+# Настройка wkhtmltopdf: путь берём из переменной окружения, иначе ищем в PATH,
+# иначе пробуем стандартный путь для Linux. Если бинарь не найден — не падаем
+# на импорте (PDF-экспорт просто будет недоступен и вернёт ошибку при вызове).
+WKHTMLTOPDF_PATH = (os.environ.get('WKHTMLTOPDF_PATH')
+                    or shutil.which('wkhtmltopdf')
+                    or '/usr/bin/wkhtmltopdf')
 if os.path.exists(WKHTMLTOPDF_PATH):
     PDFKIT_CONFIG = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
 else:
-    print(f"Предупреждение: wkhtmltopdf не найден по пути {WKHTMLTOPDF_PATH}")
-    PDFKIT_CONFIG = pdfkit.configuration()
+    print(f"Предупреждение: wkhtmltopdf не найден ({WKHTMLTOPDF_PATH}); PDF-экспорт недоступен")
+    PDFKIT_CONFIG = None
 
 
 # Подготовка данных для экспорта
