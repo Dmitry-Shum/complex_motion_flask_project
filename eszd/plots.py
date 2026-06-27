@@ -2,6 +2,31 @@ import numpy as np
 import plotly.graph_objects as go
 
 
+def add_fixed_hatch_2d(fig, origin, axis_dir, length, color='#333333',
+                       n=3, inset=2.0, spacing=1.3, stroke=1.6):
+    """Рисует короткие штрихи у конца оси — признак неподвижной (зафиксированной) оси.
+
+    Штрихи наносятся поперёк оси у её конца наклонными чёрточками («///»),
+    как принято обозначать неподвижную систему отсчёта в механике.
+    """
+    d = np.array(axis_dir, dtype=float)
+    d = d / np.linalg.norm(d)
+    p = np.array([-d[1], d[0]])          # перпендикуляр к оси
+    h = (d + p) / np.sqrt(2.0)           # направление штриха (45°)
+    tip = np.array(origin, dtype=float) + d * length
+    for i in range(n):
+        c = tip - d * (inset + i * spacing)   # центр штриха, отступая от конца
+        a = c - 0.5 * stroke * h
+        b = c + 0.5 * stroke * h
+        fig.add_trace(go.Scatter(
+            x=[a[0], b[0]], y=[a[1], b[1]],
+            mode='lines',
+            line=dict(color=color, width=1.5),
+            showlegend=False,
+            hoverinfo='none'
+        ))
+
+
 def get_trajectory_points(t_max=2.5, num_points=500):
     """Возвращает точки траектории."""
     t_vals = np.linspace(0.01, t_max, num_points)
@@ -86,6 +111,10 @@ def draw_axes_2d(fig, origin=(0, 0), length=20, labels=['X', 'Y'], colors=['#333
         showlegend=False,
         hoverinfo='none'
     ))
+
+    # Штрихи неподвижности на концах осей (оси зафиксированы)
+    add_fixed_hatch_2d(fig, origin, (1, 0), length, color=colors[0])
+    add_fixed_hatch_2d(fig, origin, (0, 1), length, color=colors[1])
 
 
 def add_vector_2d(fig, start, vector, color, name, show_legend=True):

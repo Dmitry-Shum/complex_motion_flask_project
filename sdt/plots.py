@@ -2,11 +2,39 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-def draw_axes(fig, origin=(0,0,0), length=20, labels=['X', 'Y', 'Z'], colors = ['black', 'black', 'black']):
-    """Добавляет оси координат на Plotly график."""
+def add_fixed_hatch_3d(fig, origin, axis_dir, perp_dir, length, color='black',
+                       n=3, inset=2.5, spacing=1.6, stroke=2.0):
+    """Короткие штрихи у конца 3D-оси — признак неподвижной (зафиксированной) оси."""
+    d = np.array(axis_dir, dtype=float); d = d / np.linalg.norm(d)
+    p = np.array(perp_dir, dtype=float); p = p / np.linalg.norm(p)
+    h = (d + p) / np.sqrt(2.0)               # направление штриха (45°)
+    tip = np.array(origin, dtype=float) + d * length
+    for i in range(n):
+        c = tip - d * (inset + i * spacing)
+        a = c - 0.5 * stroke * h
+        b = c + 0.5 * stroke * h
+        fig.add_trace(go.Scatter3d(
+            x=[a[0], b[0]], y=[a[1], b[1]], z=[a[2], b[2]],
+            mode='lines',
+            line=dict(color=color, width=2),
+            showlegend=False, hoverinfo='none'
+        ))
+
+
+def draw_axes(fig, origin=(0,0,0), length=20, labels=['X', 'Y', 'Z'], colors = ['black', 'black', 'black'], fixed=False):
+    """Добавляет оси координат на Plotly график.
+
+    Если fixed=True, на концах осей рисуются штрихи — признак неподвижной
+    (зафиксированной) системы отсчёта.
+    """
+    # Перпендикуляры для штрихов по каждой из осей X, Y, Z
+    perps = [(0, 1, 0), (1, 0, 0), (1, 0, 0)]
     for i, (label, color) in enumerate(zip(labels, colors)):
         end = list(origin)
         end[i] += length
+        if fixed:
+            axis_dir = [1 if j == i else 0 for j in range(3)]
+            add_fixed_hatch_3d(fig, origin, axis_dir, perps[i], length, color=color)
         
         # Линия оси
         fig.add_trace(go.Scatter3d(
@@ -149,7 +177,7 @@ def sdt_trajectory(data):
     # x = 8*cos(π/3) = 4, y = 16*sin(π/3) = 13.856
     
     fig = go.Figure()
-    draw_axes(fig, length=25)
+    draw_axes(fig, length=25, fixed=True)
     draw_axes(fig, length=1, labels=['i', 'j', 'k'], colors=['red', 'green', 'blue'])
     
     # 1. Абсолютная траектория
@@ -199,7 +227,7 @@ def sdt_velocities(data):
     point = data['point']
     
     fig = go.Figure()
-    draw_axes(fig, length=20)
+    draw_axes(fig, length=20, fixed=True)
     draw_axes(fig, length=1, labels=['i', 'j', 'k'], colors = ['red', 'green', 'blue'])
     
     fig.add_trace(go.Scatter3d(
@@ -232,7 +260,7 @@ def sdt_accelerations(data):
     point = data['point']
     
     fig = go.Figure()
-    draw_axes(fig, length=90)
+    draw_axes(fig, length=90, fixed=True)
     draw_axes(fig, length=1, labels=['i', 'j', 'k'], colors = ['red', 'green', 'blue'])
     
     fig.add_trace(go.Scatter3d(
@@ -268,7 +296,7 @@ def sdt_trajectory_with_velocities(data):
     point = data['point']
     
     fig = go.Figure()
-    draw_axes(fig, length=20)
+    draw_axes(fig, length=20, fixed=True)
     draw_axes(fig, length=1, labels=['i', 'j', 'k'], colors = ['red', 'green', 'blue'])
     
     # Добавляем траекторию
@@ -305,7 +333,7 @@ def sdt_trajectory_with_accelerations(data):
     point = data['point']
     
     fig = go.Figure()
-    draw_axes(fig, length=90)
+    draw_axes(fig, length=90, fixed=True)
     draw_axes(fig, length=1, labels=['i', 'j', 'k'], colors = ['red', 'green', 'blue'])
     
     # Добавляем траекторию
