@@ -137,13 +137,41 @@
     </div>
 
     <h3>Производные полярных координат по времени</h3>
-    <div class="formula">
-        <p>В момент времени \(t = {{ data.t }}\):</p>
+    <div class="explanation">
+        <p>Полярные координаты выражены через декартовы: \(r=\sqrt{x^2+y^2}\),
+           \(\varphi=\operatorname{arctg}\dfrac{y}{x}\). Поэтому их производные находятся
+           дифференцированием этих связей по времени (через \(\dot x,\dot y,\ddot x,\ddot y\)).
+           Производные координат в момент \(t={{ data.t }}\) (из блока ДСК):</p>
         \[
-        \dot r = \frac{dr}{dt} \approx {{ "%.4f"|format(data.dr_dt) }} \ \text{м/с}
+        \dot x = {{ "%.4f"|format(data.vx) }},\quad
+        \dot y = {{ "%.4f"|format(data.vy) }},\quad
+        \ddot x = {{ "%.4f"|format(data.ax) }},\quad
+        \ddot y = {{ "%.4f"|format(data.ay) }}.
+        \]
+    </div>
+    <div class="formula">
+        <p><strong>Первая производная \(\dot r\).</strong> Дифференцируем \(r=\sqrt{x^2+y^2}\):</p>
+        \[
+        \dot r = \frac{d}{dt}\sqrt{x^2+y^2}
+               = \frac{x\dot x + y\dot y}{\sqrt{x^2+y^2}}
+               = \frac{x\dot x + y\dot y}{r}
         \]
         \[
-        \dot \varphi = \frac{d\varphi}{dt} \approx {{ "%.4f"|format(data.dphi_dt) }} \ \text{рад/с}
+        \dot r = \frac{({{ "%.4f"|format(data.point[0]) }})({{ "%.4f"|format(data.vx) }})
+                     + ({{ "%.4f"|format(data.point[1]) }})({{ "%.4f"|format(data.vy) }})}
+                     {{ '{' }}{{ "%.4f"|format(data.r) }}{{ '}' }}
+               = {{ "%.4f"|format(data.dr_dt) }} \ \text{м/с}
+        \]
+        <p><strong>Первая производная \(\dot\varphi\).</strong> Дифференцируем
+           \(\varphi=\operatorname{arctg}\dfrac{y}{x}\)
+           (используя \(r^2=x^2+y^2\)):</p>
+        \[
+        \dot \varphi = \frac{x\dot y - y\dot x}{x^2+y^2}
+                     = \frac{x\dot y - y\dot x}{r^2}
+                     = \frac{({{ "%.4f"|format(data.point[0]) }})({{ "%.4f"|format(data.vy) }})
+                           - ({{ "%.4f"|format(data.point[1]) }})({{ "%.4f"|format(data.vx) }})}
+                           {{ '{' }}{{ "%.4f"|format(data.r) }}^2{{ '}' }}
+                     = {{ "%.4f"|format(data.dphi_dt) }} \ \text{рад/с}
         \]
     </div>
 
@@ -181,12 +209,18 @@
 
     <h3>Вторые производные</h3>
     <div class="formula">
-        <p>В момент времени \(t = {{ data.t }}\):</p>
+        <p><strong>Вторая производная \(\ddot r\).</strong> Дифференцируем
+           \(\dot r = \dfrac{x\dot x + y\dot y}{r}\) по времени
+           (числитель даёт \(\dot x^2 + x\ddot x + \dot y^2 + y\ddot y\), и вычитается \(\dot r^2\)):</p>
         \[
-        \ddot r = \frac{d^2r}{dt^2} \approx {{ "%.4f"|format(data.d2r_dt2) }} \ \text{м/с}^2
+        \ddot r = \frac{\dot x^2 + \dot y^2 + x\ddot x + y\ddot y - \dot r^2}{r}
+                = {{ "%.4f"|format(data.d2r_dt2) }} \ \text{м/с}^2
         \]
+        <p><strong>Вторая производная \(\ddot\varphi\).</strong> Дифференцируем
+           \(\dot\varphi = \dfrac{x\dot y - y\dot x}{r^2}\) по времени:</p>
         \[
-        \ddot \varphi = \frac{d^2\varphi}{dt^2} \approx {{ "%.4f"|format(data.d2phi_dt2) }} \ \text{рад/с}^2
+        \ddot \varphi = \frac{x\ddot y - y\ddot x}{r^2} - \frac{2\dot r\,\dot\varphi}{r}
+                      = {{ "%.4f"|format(data.d2phi_dt2) }} \ \text{рад/с}^2
         \]
     </div>
 
