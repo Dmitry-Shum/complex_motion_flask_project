@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кинематика точки — РК6-48Б, Бригада 2</title>
+<style>
+ body{margin:0;padding:0;font-family:'Times New Roman',Times,serif;background:#f4f6f9;color:#222;}
+ .wrap{max-width:880px;margin:0 auto;padding:40px 20px;}
+ .card{background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.08);padding:32px;}
+ h1{color:#0066cc;margin:0 0 6px;font-size:1.9rem;}
+ .sub{color:#555;margin:0 0 4px;font-size:1.05rem;}
+ .meta{color:#777;font-size:.95rem;margin:0 0 24px;}
+ .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:18px;}
+ a.tile{display:block;text-decoration:none;background:#0066cc;color:#fff;border-radius:10px;padding:20px 16px;text-align:center;transition:background .2s,transform .1s;}
+ a.tile:hover{background:#004c99;transform:translateY(-2px);}
+ a.tile b{display:block;font-size:1.25rem;margin-bottom:4px;}
+ a.tile span{font-size:.9rem;opacity:.9;}
+ .note{margin-top:26px;color:#666;font-size:.9rem;border-top:1px solid #eee;padding-top:14px;}
+ .green{background:#28a745;} .green:hover{background:#1e7e34;}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="card">
+  <h1>Кинематика точки</h1>
+  <p class="sub">Домашнее задание №1 по прикладной механике</p>
+  <p class="meta">МГТУ им. Н.&nbsp;Э.&nbsp;Баумана · РК6-48Б, Бригада&nbsp;2 · момент времени t&nbsp;=&nbsp;1&nbsp;с</p>
+  <p>Движение точки рассмотрено четырьмя способами. Каждый раздел содержит подробные
+     выкладки, формулы и интерактивные графики (можно вращать и масштабировать).</p>
+  <div class="grid">
+    <a class="tile" href="dsk.html"><b>ДСК</b><span>декартовы координаты</span></a>
+    <a class="tile" href="psk.html"><b>ПСК</b><span>полярные координаты</span></a>
+    <a class="tile" href="eszd.html"><b>ЕСПД</b><span>естественный способ</span></a>
+    <a class="tile green" href="sdt.html"><b>СДТ</b><span>сложное движение точки</span></a>
+  </div>
+  <p class="note">Относительное движение: x = 8·cos(πt²/3), y = 16·sin(πt²/3). Переносное:
+     z′ = 2t² + 4, φ′ = 2·sin(πt). Все числа оформлены с десятичной запятой по ГОСТ.</p>
+ </div>
+</div>
+</body>
+</html>
