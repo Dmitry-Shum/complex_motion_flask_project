@@ -52,16 +52,25 @@ def compute_values_at_time(t0=1):
     a_tau = (vx0 * ax0 + vy0 * ay0) / V if V > 0 else 0
     
     # Нормальное ускорение (центростремительное)
-    # a_n = sqrt(a^2 - a_tau^2)
+    # Способ 1 (основной): a_n = sqrt(a^2 - a_tau^2)
     a_mod = np.hypot(ax0, ay0)
     a_n = np.sqrt(max(0, a_mod**2 - a_tau**2))
-    
+
+    # --- ПРОВЕРКА нормального ускорения двумя независимыми способами ---
+    # Способ 2: через векторное произведение скорости и ускорения
+    #           a_n = |Vx*ay - Vy*ax| / V   (модуль поперечной составляющей a)
+    cross_va = vx0 * ay0 - vy0 * ax0
+    a_n_cross = abs(cross_va) / V if V > 0 else 0.0
+
     # Радиус кривизны
     # ρ = V^2 / a_n (если a_n > 0)
     if a_n > 1e-10:
         rho = V**2 / a_n
     else:
         rho = float('inf')
+
+    # Способ 3: через радиус кривизны: a_n = V^2 / rho
+    a_n_rho = V**2 / rho if np.isfinite(rho) and rho > 0 else 0.0
     
     # Длина дуги (численное интегрирование)
     # Создаём функцию для численного интегрирования модуля скорости
@@ -100,6 +109,8 @@ def compute_values_at_time(t0=1):
         'V': V,
         'a_tau': a_tau,
         'a_n': a_n,
+        'a_n_cross': a_n_cross,
+        'a_n_rho': a_n_rho,
         'a_mod': a_mod,
         'rho': rho,
         's': s0,
@@ -143,8 +154,14 @@ def eszd_compute_complex_motion(t=1):
         'point': np.array([vals['x'], vals['y']]),
         'V': vals['V'],
         'V_vec': np.array([vals['vx'], vals['vy']]),
+        'vx': vals['vx'],
+        'vy': vals['vy'],
+        'ax': vals['ax'],
+        'ay': vals['ay'],
         'a_tau': vals['a_tau'],
         'a_n': vals['a_n'],
+        'a_n_cross': vals['a_n_cross'],
+        'a_n_rho': vals['a_n_rho'],
         'a_mod': vals['a_mod'],
         'a_tau_vec': np.array([vals['tau_x'], vals['tau_y']]) * vals['a_tau'],
         'a_n_vec': np.array([vals['n_x'], vals['n_y']]) * vals['a_n'],
